@@ -5,12 +5,17 @@ class Solution(object):
         :rtype: bool
         """
 
-        st = []
-        pair = {')': '(', ']': '[', '}': '{'}
-        for c in s:
-            if c in pair:
-                if not st or st.pop() != pair[c]:
-                    return False
+        stack = []
+        for ch in s:
+            if ch == "(" or ch == "[" or ch == "{":
+                stack.append(ch)
             else:
-                st.append(c)
-        return not st
+                if not stack:
+                    return False
+                if ch == ")" and stack.pop() != "(":
+                    return False
+                if ch == "]" and stack.pop() != "[":
+                    return False
+                if ch == "}" and stack.pop() != "{":
+                    return False
+        return len(stack) == 0
